@@ -1,55 +1,57 @@
 # PlantUML CGI
 
-PlantUML_CGI は、PlantUML エンコードを png 画像に変換する CGI スクリプトです。
-Apache と Python で動作し、非常にシンプルです。
+English | [Japanese](/READMEj.md)
 
-## 前提条件
+PlantUML_CGI is CGI script to translate from PlantUML encode to png image.
+This script is very simple because it works by just Apache and Python.
 
-- plantuml.jar が使えるようになっていること。
-- Apache サーバが起動し、cgi が有効になっていること。
-- cgi で Python のコードを実行できること。
+## Requirement
 
-## インストール
+- plantuml.jar can used.
+- Apache server is working, cgi is enabled.
+- cgi can exec Python code.
 
-plantuml を cgi置き場 に配置して下さい。
-- 例： `/usr/lib/cgi-bin/plantuml`
+## How to install
 
-## 使い方
+Place plantuml to the path for cgi.
+- e.g. `/usr/lib/cgi-bin/plantuml`
 
-上記でインストールした plantuml の CGI に、クエリパラメータ puencode で PlantUML エンコードを渡して実行してください。CGI は plantuml.jar でレンダリングして得られた png 画像のイメージを返します。例えば、ブラウザから下のようなURLへアクセスし、png 画像を得ます。
-- 例： `http://<cgiサーバ>/<cgi置き場>/plantuml?puencode=<PlantUMLエンコード>`
+## How to use
 
-## Redmine から PlantUML_CGI を利用する
+Exec above plantuml CGI with PlantUML encode supplied by query parmeter 'puencode'. CGI return a png image rendered by `plantuml.jar`. For example, get a png image by accessing to URL as like as follow via web browser.
+- e.g. `http://<cgi server>/<path to cgi placed>/plantuml?puencode=<PlantUML encode>`
 
-https://github.com/gelin/plantuml-redmine-macro がシンプルで素晴らしい。
-これをベースに、init.rb を修正して Redmine を再起動すれば PlantUML_CGI を利用できる。
+## Use PlantUML_CGI from Redmine
 
-1. plantuml-redmine-macro を導入する
-2. plantuml-redmine-macro の init.rb の 
+https://github.com/gelin/plantuml-redmine-macro is good plugin because very simple.
+Based it and modify `init.rb` then restart Redmine, you can use PlantUML_CGI from Redmine.
+
+1. Apply plantuml-redmine-macro.
+2. Modify `init.rb` in plantuml-redmine-macro from
    ```ruby
    image_tag(URI.join(url, encoded).to_s)
    ```
-   を
+   to
    ```ruby
    image_tag(URI.join(Setting.plugin_plantuml_macro['plantuml_url'], '?puencode=' + encoded).to_s)
    ```
-   に修正する。
-   ※ベースとなった init.rb のリビジョンは「658f599972125d928f9b718ec9e22c554590641b」
-3. Redmine を再起動する
-4. Redmine に管理者でログイン、管理からプラグインを開き plantuml-redmine-macro の設定ページから PlantUML_CGI のURLを指定する
-   - 例： `http://XXX.XXX.XXX.XXX/cgi-bin/plantuml`
+   - The revision of `init.rb` was `658f599972125d928f9b718ec9e22c554590641b`.
+3. Restart Redmine
+4. Login to Redmine as administrator, open plugins menu from maintenance, enter setting page for plantuml-redmine-macro and set the URL for PlantUML_CGI.
+   - e.g. `http://XXX.XXX.XXX.XXX/cgi-bin/plantuml`
 
-## モチベーション
+## Motivation
 
-ローカルサーバの Redmine 内で PlantUML を使う際、同サーバに PlantUML サーバを立てて利用したかった。
-しかし apache maven、jetty、Tomcat、Docker、をインストールしたくなかった。
-そこで、PlantUML をローカル実行できるようにし、シンプルに CGI で PlantUML サーバを実装することにした。
+I wanted to use PlantUML server on the server running Redmine.
+However, I did't want to install apache maven, jetty, Tomcat and Docker.
+So, I decided to install PlantUML to the server running Redmine and create CGI script for PlantUML server.
 
-## Python のバージョン
+## The version of Python
 
 Raspbian buster および Ubuntu 22.04 LTS のそれぞれでデフォルトの Python を使いたかったため、コードは Python2 でも Python3 でも動作するように実装した。
+CGI script was implemented for Python2 and Python3 because I want to use it on Raspbian buster and Ubuntu 22.04 LTS keep default.
 
-## 動作確認環境
+## Confirmed environment
 
 | Hardware    | Raspberry-Pi 3B                | GPD-WIN          |
 | ---         | ---                            | ---              |
@@ -65,24 +67,24 @@ Raspbian buster および Ubuntu 22.04 LTS のそれぞれでデフォルトの 
 | Graphviz    | 2.40.1                         | 2.43.0           |
 | Java        | 11.0.16                        | 11.0.17          |
 
-## 設計
+## Design
 
-アプリケーション間通信
+Communications between applications
 
 ![Sequence Diagram](http://www.plantuml.com/plantuml/png/TP513W8X34NtFGKNq0EuS6VYGXCNUW0oL8DXW3ZLyujDR22PlmF-U_r9ELxF9xVPkvfyblUStCvTViTRUpxagGGcFqdyU65ZoE1H3AnydmhFzHuJjxHKpZRB0aJh9BjtFOk4MFw0ZHjI6jbEtZxz2xaQqa2krDRyeC30HRNOKnJk89M5pK9Bqn-41VG5 "PlantUML_CGI")
 
-エンコード/デコード
+Encode / Decode
 
 ![Encode/Decode](http://www.plantuml.com/plantuml/png/VL0z3u8m4DtxAnec66GY30uEHZTDN9n9eHT3KjgcFHP_lGUAoALnQdhtFkuzhmBsNU-LHPdT33ttwqLsJaCcqhkdwLksEwe8TIN1_kCjM_48RlGoEt_-p5Nk3jnCxkUtxDpW0yIO5u8ZYCIk858x3ygshjupud7GncnbHWmb1cMZKGWv2JJe6Z_Xni4K0gp-nZW1Z_6ZpUsuyY8voPDByZuMTPDBp-RfFbYlIuaQrXgd82y0 "PlantUML Encode/Decode")
 
 ## References
 
-- PlantUML Server 公式ページ
-  https://plantuml.com/ja/server
-- PlantUML Server ソースコード
+- PlantUML Server Official Page
+  https://plantuml.com/en/server
+- PlantUML Server source code
   https://github.com/plantuml/plantuml-server
-- PlantUML テキスト エンコード
-  https://plantuml.com/ja/text-encoding
+- PlantUML text encode
+  https://plantuml.com/en/text-encoding
 - PlantUML Server
   http://www.plantuml.com/plantuml
 - plantuml-redmine-macro
