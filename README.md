@@ -37,7 +37,7 @@ Based it and modify `init.rb` then restart Redmine, you can use PlantUML_CGI fro
    ```
    - The revision of `init.rb` was `658f599972125d928f9b718ec9e22c554590641b`.
 3. Restart Redmine
-4. Login to Redmine as administrator, open plugins menu from maintenance, enter setting page for plantuml-redmine-macro and set the URL for PlantUML_CGI.
+4. Login to Redmine as administrator, open Plugins from Administration menu, enter configure page for plantuml-redmine-macro and set the URL for PlantUML_CGI.
    - e.g. `http://XXX.XXX.XXX.XXX/cgi-bin/plantuml`
 
 ## Motivation
