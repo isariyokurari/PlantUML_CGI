@@ -48,7 +48,6 @@ So, I decided to install PlantUML to the server running Redmine and create CGI s
 
 ## The version of Python
 
-Raspbian buster および Ubuntu 22.04 LTS のそれぞれでデフォルトの Python を使いたかったため、コードは Python2 でも Python3 でも動作するように実装した。
 CGI script was implemented for Python2 and Python3 because I want to use it on Raspbian buster and Ubuntu 22.04 LTS keep default.
 
 ## Confirmed environment
