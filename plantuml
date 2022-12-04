@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+import sys
+import cgi
+import subprocess
+import string
+import base64
+from zlib import decompress
+import string
+
+# Set maketrans() and write()
+def _maketrans(foo,bar):
+    return str.maketrans(str(foo),str(bar))
+if 'maketrans' in dir(string):
+    maketrans = string.maketrans
+    write = sys.stdout.write
+else:
+    maketrans = _maketrans
+    write = sys.stdout.buffer.write
+
+# Generate a Table for translate
+plantuml_alphabet = string.digits + string.ascii_uppercase + string.ascii_lowercase + '-_'
+base64_alphabet   = string.ascii_uppercase + string.ascii_lowercase + string.digits + '+/'
+plantuml_to_b64   = maketrans(plantuml_alphabet.encode('utf-8'), base64_alphabet.encode('utf-8'))
+
+# Decode PlantUML encode
+form = cgi.FieldStorage()
+puencode = form.getfirst('puencode', '')
+uml = decompress(base64.b64decode(puencode.translate(plantuml_to_b64)), -8)
+
+# Exec PlantUML
+if maketrans != _maketrans:
+    import tempfile
+    import commands
+    fp = tempfile.NamedTemporaryFile()
+    with open(fp.name, 'wb') as f:
+        print >> f, b'{}'.format(uml)
+    res = commands.getoutput('cat {} | /usr/bin/java -Djava.io.tmpdir=/var/tmp -Djava.awt.headless=true -jar /usr/local/bin/plantuml.jar -charset UTF-8 -pipe'.format(fp.name))
+    fp.close()
+else:
+    res = subprocess.run('/usr/bin/java -Djava.io.tmpdir=/var/tmp -Djava.awt.headless=true -jar /usr/local/bin/plantuml.jar -charset UTF-8 -pipe'.split(), capture_output=True, input=uml).stdout
+
+# Output to stdout
+print("Content-Type: image/jpeg")
+print("Content-Length: {:d}\n".format(len(res)))
+write(res)
