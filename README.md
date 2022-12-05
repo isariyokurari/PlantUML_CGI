@@ -70,7 +70,7 @@ CGI script was implemented for Python2 and Python3 because I want to use it on R
 
 Communications between applications
 
-![Sequence Diagram](http://www.plantuml.com/plantuml/png/TP513W8X34NtFGKNq0EuS6VYGXCNUW0oL8DXW3ZLyujDR22PlmF-U_r9ELxF9xVPkvfyblUStCvTViTRUpxagGGcFqdyU65ZoE1H3AnydmhFzHuJjxHKpZRB0aJh9BjtFOk4MFw0ZHjI6jbEtZxz2xaQqa2krDRyeC30HRNOKnJk89M5pK9Bqn-41VG5 "PlantUML_CGI")
+![Sequence Diagram](http://www.plantuml.com/plantuml/png/ymZnzL7GjLCeo4dCAodDpL6mKWW0CKE1mgvvoVafgLo9oIMPPOabgN0rN306ciQKL91w5DcIrDo2jCoSLA1iVa5g7jmic0HErM2JO7naU_Io4ekWyd3JK2Iva3beBYp8I-TAISMd3TCXEVd5gK1D-5qE2aRSvWC0 "PlantUML_CGI")
 
 Encode / Decode
 
