@@ -44,7 +44,7 @@ Based it and modify `init.rb` then restart Redmine, you can use PlantUML_CGI fro
 
 I wanted to use PlantUML server on the server running Redmine.
 However, I did't want to install apache maven, jetty, Tomcat and Docker.
-So, I decided to install PlantUML to the server running Redmine and create CGI script for PlantUML server.
+So, I decided to install PlantUML to the server running Redmine and develop CGI script for PlantUML server.
 
 ## The version of Python
 
